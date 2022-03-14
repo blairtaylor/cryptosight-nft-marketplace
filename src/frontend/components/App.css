@@ -1,0 +1,90 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.custom-btn {
+  background-color: blueviolet !important;
+  border: #000000 !important;
+}
+
+.h2-text {
+  color: #feb019 !important; 
+}
+
+.custom-navbar {
+  background-color: #ffffff !important;
+  border: #000000 !important;
+  text-decoration-color: #feb019;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #feb019;
+}
+
+.nav {
+  background-color: green; /*will change background-color of element */
+  color: #feb019; /*will change color of text within the element */
+}
+
+.nav-links {
+  color: black !important; /*will change color of text within the element */
+  box-shadow: #000000 !important;
+  font-weight: 400 !important;
+}
+
+.nav-links:hover {
+  color: #feb019 !important;
+  font-weight: 600 !important;
+  background-color: black; /*will change background-color of element on hover */
+}
+
+.nav-links:link {
+  color: #aaa !important; 
+}
+
+.nav-links:active {
+  color: greenyellow !important; 
+}
+
+.card-img-overlay {
+  background-color: rgba(#ffffff, 0.4) !important; 
+}
+
+/* .card-title {
+  color: white !important; 
+} */
