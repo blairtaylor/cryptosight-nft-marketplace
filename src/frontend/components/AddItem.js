@@ -3,6 +3,10 @@ import { ethers } from 'ethers'
 import { Row, Form, Button, Card, FormLabel } from 'react-bootstrap'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
 import { useScreenshot } from 'use-screenshot-hook'
+import DatePicker from 'react-datepicker'
+import TimePicker from 'react-time-picker'
+
+import 'react-datepicker/dist/react-datepicker.css'
 
 import ticket1 from '../images/simple-party-ticket-1.png'
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
@@ -16,6 +20,8 @@ const AddItem = ({ marketplace, nft }) => {
   const imageRef = useRef(null)
   const { ticketImage, takeScreenshot } = useScreenshot()
   const [template, setTemplate] = useState('upload')
+  const [eventDate, setEventDate] = useState(new Date())
+  const [eventTime, setEventTime] = useState('10:00')
   const uploadToIPFS = async (event) => {
     event.preventDefault()
     const file = event.target.files[0]
@@ -77,28 +83,25 @@ const AddItem = ({ marketplace, nft }) => {
     if (template === 'template') {
       return (
         <Row className="g-4">
-        <div ref={imageRef}>
-          <Card
-            style={{ width: '50rem', paddingTop: 20, paddingBottom: 20 }}
-          >
-            <Card.Img variant="bottom" src={ticket1} />
-            <Card.ImgOverlay
-              style={{
-                paddingTop: 40,
-                paddingLeft: 540,
-                fontFamily: 'Arial, Helvetica, sans-serif',
-                fontWeight: 'bold',
-              }}
-            >
-              <Card.Text>March 15, 2020</Card.Text>
-              <Card.Text>8pm</Card.Text>
-              <Card.Text>{address}</Card.Text>
-              <Card.Text>{price} ETH</Card.Text>
-            </Card.ImgOverlay>
-          </Card>
-        </div>
-      </Row>
-
+          <div ref={imageRef}>
+            <Card style={{ width: '50rem', paddingTop: 20, paddingBottom: 20 }}>
+              <Card.Img variant="bottom" src={ticket1} />
+              <Card.ImgOverlay
+                style={{
+                  paddingTop: 40,
+                  paddingLeft: 540,
+                  fontFamily: 'Arial, Helvetica, sans-serif',
+                  fontWeight: 'bold',
+                }}
+              >
+                <Card.Text>March 15, 2020</Card.Text>
+                <Card.Text>8pm</Card.Text>
+                <Card.Text>{address}</Card.Text>
+                <Card.Text>{price} ETH</Card.Text>
+              </Card.ImgOverlay>
+            </Card>
+          </div>
+        </Row>
       )
     }
   }
@@ -134,8 +137,8 @@ const AddItem = ({ marketplace, nft }) => {
                   />
                 </Form.Group>
               </div>
-              { displayUpload() }
-              { displayCard() }
+              {displayUpload()}
+              {displayCard()}
               <Form.Control
                 onChange={(e) => setName(e.target.value)}
                 size="lg"
@@ -150,20 +153,14 @@ const AddItem = ({ marketplace, nft }) => {
                 as="textarea"
                 placeholder="Description"
               />
-              <Form.Control
-                onChange={(e) => setName(e.target.value)}
-                size="lg"
-                required
-                type="text"
-                placeholder="Date"
-              />
-              <Form.Control
-                onChange={(e) => setName(e.target.value)}
-                size="lg"
-                required
-                type="text"
-                placeholder="Time"
-              />
+              <div style={{ textAlign: 'left' }}>
+                Event Date and Time:
+                <DatePicker
+                  selected={eventDate}
+                  onChange={(date) => setEventDate(date)}
+                />
+                <TimePicker onChange={setEventTime} value={eventTime} />
+              </div>
               <Form.Control
                 onChange={(e) => setAddress(e.target.value)}
                 size="lg"
