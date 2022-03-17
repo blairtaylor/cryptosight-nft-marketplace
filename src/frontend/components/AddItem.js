@@ -72,6 +72,36 @@ const AddItem = ({ marketplace, nft }) => {
       )
     }
   }
+
+  function displayCard() {
+    if (template === 'template') {
+      return (
+        <Row className="g-4">
+        <div ref={imageRef}>
+          <Card
+            style={{ width: '50rem', paddingTop: 20, paddingBottom: 20 }}
+          >
+            <Card.Img variant="bottom" src={ticket1} />
+            <Card.ImgOverlay
+              style={{
+                paddingTop: 40,
+                paddingLeft: 540,
+                fontFamily: 'Arial, Helvetica, sans-serif',
+                fontWeight: 'bold',
+              }}
+            >
+              <Card.Text>March 15, 2020</Card.Text>
+              <Card.Text>8pm</Card.Text>
+              <Card.Text>{address}</Card.Text>
+              <Card.Text>{price} ETH</Card.Text>
+            </Card.ImgOverlay>
+          </Card>
+        </div>
+      </Row>
+
+      )
+    }
+  }
   return (
     <div className="container-fluid mt-5">
       <div className="row">
@@ -105,6 +135,7 @@ const AddItem = ({ marketplace, nft }) => {
                 </Form.Group>
               </div>
               { displayUpload() }
+              { displayCard() }
               <Form.Control
                 onChange={(e) => setName(e.target.value)}
                 size="lg"
@@ -147,28 +178,6 @@ const AddItem = ({ marketplace, nft }) => {
                 type="number"
                 placeholder="Price in ETH"
               />
-            </Row>
-            <Row className="g-4">
-              <div ref={imageRef}>
-                <Card
-                  style={{ width: '50rem', paddingTop: 20, paddingBottom: 20 }}
-                >
-                  <Card.Img variant="bottom" src={ticket1} />
-                  <Card.ImgOverlay
-                    style={{
-                      paddingTop: 40,
-                      paddingLeft: 540,
-                      fontFamily: 'Arial, Helvetica, sans-serif',
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    <Card.Text>March 15, 2020</Card.Text>
-                    <Card.Text>8pm</Card.Text>
-                    <Card.Text>{address}</Card.Text>
-                    <Card.Text>{price} ETH</Card.Text>
-                  </Card.ImgOverlay>
-                </Card>
-              </div>
             </Row>
             <Row className="g-4">
               &nbsp;
