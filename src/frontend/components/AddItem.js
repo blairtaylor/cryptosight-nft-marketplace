@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { ethers } from 'ethers'
-import { Row, Form, Button, Card } from 'react-bootstrap'
+import { Row, Form, Button, Card, FormLabel } from 'react-bootstrap'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
+import { useScreenshot } from 'use-screenshot-hook'
+
 import ticket1 from '../images/simple-party-ticket-1.png'
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
@@ -11,6 +13,9 @@ const AddItem = ({ marketplace, nft }) => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [address, setAddress] = useState('')
+  const imageRef = useRef(null)
+  const { ticketImage, takeScreenshot } = useScreenshot()
+  const [template, setTemplate] = useState('upload')
   const uploadToIPFS = async (event) => {
     event.preventDefault()
     const file = event.target.files[0]
@@ -48,6 +53,25 @@ const AddItem = ({ marketplace, nft }) => {
     const listingPrice = ethers.utils.parseEther(price.toString())
     await (await marketplace.makeItem(nft.address, id, listingPrice)).wait()
   }
+
+  const handleChange = (e) => {
+    e.persist()
+    console.log(e.target.value)
+    setTemplate(e.target.value)
+  }
+
+  function displayUpload() {
+    if (template === 'upload') {
+      return (
+        <Form.Control
+          type="file"
+          required
+          name="file"
+          onChange={uploadToIPFS}
+        />
+      )
+    }
+  }
   return (
     <div className="container-fluid mt-5">
       <div className="row">
@@ -58,12 +82,29 @@ const AddItem = ({ marketplace, nft }) => {
         >
           <div className="content mx-auto">
             <Row className="g-4">
-              <Form.Control
-                type="file"
-                required
-                name="file"
-                onChange={uploadToIPFS}
-              />
+              <div className="mb-3" style={{ textAlign: 'left' }}>
+                <Form.Group controlId="selectNFT">
+                  <Form.Check
+                    inline
+                    type="radio"
+                    value="upload"
+                    onChange={handleChange}
+                    checked={template === 'upload'}
+                    id="rb-template-1"
+                    label="Upload an Image"
+                  />
+                  <Form.Check
+                    inline
+                    type="radio"
+                    value="template"
+                    onChange={handleChange}
+                    checked={template === 'template'}
+                    id="rb-template-2"
+                    label="Choose a template"
+                  />
+                </Form.Group>
+              </div>
+              { displayUpload() }
               <Form.Control
                 onChange={(e) => setName(e.target.value)}
                 size="lg"
@@ -108,25 +149,26 @@ const AddItem = ({ marketplace, nft }) => {
               />
             </Row>
             <Row className="g-4">
-              <Card
-                style={{ width: '50rem', paddingTop: 20, paddingBottom: 20 }}
-              >
-                <Card.Img variant="bottom" src={ticket1} />
-                <Card.ImgOverlay style={{paddingTop:40, paddingLeft: 540, fontFamily: 'Arial, Helvetica, sans-serif', fontWeight: 'bold'}}>
-                  <Card.Text>
-                      March 15, 2020
-                  </Card.Text>
-                  <Card.Text>
-                      8pm
-                  </Card.Text>
-                  <Card.Text>
-                      {address}
-                  </Card.Text>
-                  <Card.Text>
-                      {price} ETH
-                  </Card.Text>
-                </Card.ImgOverlay>
-              </Card>
+              <div ref={imageRef}>
+                <Card
+                  style={{ width: '50rem', paddingTop: 20, paddingBottom: 20 }}
+                >
+                  <Card.Img variant="bottom" src={ticket1} />
+                  <Card.ImgOverlay
+                    style={{
+                      paddingTop: 40,
+                      paddingLeft: 540,
+                      fontFamily: 'Arial, Helvetica, sans-serif',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    <Card.Text>March 15, 2020</Card.Text>
+                    <Card.Text>8pm</Card.Text>
+                    <Card.Text>{address}</Card.Text>
+                    <Card.Text>{price} ETH</Card.Text>
+                  </Card.ImgOverlay>
+                </Card>
+              </div>
             </Row>
             <Row className="g-4">
               &nbsp;
@@ -139,6 +181,21 @@ const AddItem = ({ marketplace, nft }) => {
                 >
                   Add an NFT and list for sale
                 </Button>
+              </div>
+            </Row>
+            <Row className="g-4">
+              <div>
+                <h1>Hello World!</h1>
+                <button
+                  onClick={() => {
+                    takeScreenshot(imageRef)
+                    alert('clicked')
+                  }}
+                >
+                  Take Screenshot
+                </button>
+                {ticketImage && <img src={ticketImage} />}
+                {<img src={ticketImage} />}
               </div>
             </Row>
           </div>
