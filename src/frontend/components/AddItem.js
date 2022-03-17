@@ -3,10 +3,9 @@ import { ethers } from 'ethers'
 import { Row, Form, Button, Card, FormLabel } from 'react-bootstrap'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
 import { useScreenshot } from 'use-screenshot-hook'
-import DatePicker from 'react-datepicker'
-import TimePicker from 'react-time-picker'
-
-import 'react-datepicker/dist/react-datepicker.css'
+import moment from 'moment'
+import { DatePicker, Space } from 'antd'
+import 'antd/dist/antd.css'
 
 import ticket1 from '../images/simple-party-ticket-1.png'
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
@@ -21,7 +20,7 @@ const AddItem = ({ marketplace, nft }) => {
   const { ticketImage, takeScreenshot } = useScreenshot()
   const [template, setTemplate] = useState('upload')
   const [eventDate, setEventDate] = useState(new Date())
-  const [eventTime, setEventTime] = useState('10:00')
+  // const [eventTime, setEventTime] = useState('10:00')
   const uploadToIPFS = async (event) => {
     event.preventDefault()
     const file = event.target.files[0]
@@ -66,6 +65,10 @@ const AddItem = ({ marketplace, nft }) => {
     setTemplate(e.target.value)
   }
 
+  function dateChanged(date, dateString) {
+    setEventDate(date);
+  }
+
   function displayUpload() {
     if (template === 'upload') {
       return (
@@ -88,16 +91,17 @@ const AddItem = ({ marketplace, nft }) => {
               <Card.Img variant="bottom" src={ticket1} />
               <Card.ImgOverlay
                 style={{
-                  paddingTop: 40,
-                  paddingLeft: 540,
+                  paddingTop: 60,
+                  paddingLeft: 585,
                   fontFamily: 'Arial, Helvetica, sans-serif',
                   fontWeight: 'bold',
                 }}
               >
-                <Card.Text>March 15, 2020</Card.Text>
-                <Card.Text>8pm</Card.Text>
-                <Card.Text>{address}</Card.Text>
-                <Card.Text>{price} ETH</Card.Text>
+                <Card.Text style={{textAlign: 'left'}}>Event Information</Card.Text>
+                <Card.Text style={{textAlign: 'left'}}>Date: {moment(eventDate).format('MMMM Do YYYY')}</Card.Text>
+                <Card.Text style={{textAlign: 'left'}}>Time: {moment(eventDate).format('h:mm:ss a')}</Card.Text>
+                <Card.Text style={{textAlign: 'left'}}>{address}</Card.Text>
+                <Card.Text style={{textAlign: 'left'}}>{price} ETH</Card.Text>
               </Card.ImgOverlay>
             </Card>
           </div>
@@ -153,13 +157,16 @@ const AddItem = ({ marketplace, nft }) => {
                 as="textarea"
                 placeholder="Description"
               />
-              <div style={{ textAlign: 'left' }}>
-                Event Date and Time:
-                <DatePicker
-                  selected={eventDate}
-                  onChange={(date) => setEventDate(date)}
-                />
-                <TimePicker onChange={setEventTime} value={eventTime} />
+              <div style={{ textAlign: 'left', paddingLeft: 0 }}>
+                <Space direction="vertical" size={12}>
+                  Event Date and Time:
+                  <DatePicker
+                    onChange={dateChanged}
+                    size="large"
+                    format="YYYY-MM-DD HH:mm:ss"
+                    showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
+                  />
+                </Space>
               </div>
               <Form.Control
                 onChange={(e) => setAddress(e.target.value)}
