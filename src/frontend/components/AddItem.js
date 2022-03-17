@@ -4,7 +4,7 @@ import { Row, Form, Button } from 'react-bootstrap'
 import { create as ipfsHttpClient } from 'ipfs-http-client'
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
-const Create = ({ marketplace, nft }) => {
+const AddItem = ({ marketplace, nft }) => {
   const [image, setImage] = useState('')
   const [price, setPrice] = useState(null)
   const [name, setName] = useState('')
@@ -72,4 +72,4 @@ const Create = ({ marketplace, nft }) => {
   );
 }
 
-export default Create
+export default AddItem

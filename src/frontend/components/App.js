@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import Navigation from './Navbar';
 import Home from './Home.js'
-import Create from './Create.js'
+import AddItem from './AddItem.js'
 import MyListedItems from './MyListedItems.js'
 import MyPurchases from './MyPurchases.js'
 import MarketplaceAbi from '../contractsData/Marketplace.json'
@@ -68,8 +68,8 @@ function App() {
               <Route path="/" element={
                 <Home marketplace={marketplace} nft={nft} />
               } />
-              <Route path="/create" element={
-                <Create marketplace={marketplace} nft={nft} />
+              <Route path="/additem" element={
+                <AddItem marketplace={marketplace} nft={nft} />
               } />
               <Route path="/my-listed-items" element={
                 <MyListedItems marketplace={marketplace} nft={nft} account={account} />
