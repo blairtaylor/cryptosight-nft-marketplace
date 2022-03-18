@@ -63,6 +63,10 @@ const AddItem = ({ marketplace, nft }) => {
     e.persist()
     console.log(e.target.value)
     setTemplate(e.target.value)
+    // default values if not set
+    if (e.target.value === 'template') {
+      if (!name) setName("My Event")
+    }
   }
 
   function dateChanged(date, dateString) {
@@ -85,23 +89,26 @@ const AddItem = ({ marketplace, nft }) => {
   function displayCard() {
     if (template === 'template') {
       return (
-        <Row className="g-4">
+        <Row>
           <div ref={imageRef}>
-            <Card style={{ width: '50rem', paddingTop: 20, paddingBottom: 20 }}>
+            <Card style={{ width: '50rem' }}>
               <Card.Img variant="bottom" src={ticket1} />
               <Card.ImgOverlay
                 style={{
                   paddingTop: 60,
                   paddingLeft: 585,
-                  fontFamily: 'Arial, Helvetica, sans-serif',
+                  // fontFamily: 'Arial, Helvetica, sans-serif',
+                  fontFamily: 'Georgia',
+                  fontSize: 14,
                   fontWeight: 'bold',
                 }}
               >
                 <Card.Text style={{textAlign: 'left'}}>Event Information</Card.Text>
+                <Card.Text style={{textAlign: 'left'}}>{name ? name : ""}</Card.Text>
                 <Card.Text style={{textAlign: 'left'}}>Date: {moment(eventDate).format('MMMM Do YYYY')}</Card.Text>
-                <Card.Text style={{textAlign: 'left'}}>Time: {moment(eventDate).format('h:mm:ss a')}</Card.Text>
-                <Card.Text style={{textAlign: 'left'}}>{address}</Card.Text>
-                <Card.Text style={{textAlign: 'left'}}>{price} ETH</Card.Text>
+                <Card.Text style={{textAlign: 'left'}}>Time: {moment(eventDate).format('h:mm a')}</Card.Text>
+                <Card.Text style={{textAlign: 'left'}}>{address ? address : ""}</Card.Text>
+                <Card.Text style={{textAlign: 'left'}}>{price ? price : 0} ETH</Card.Text>
               </Card.ImgOverlay>
             </Card>
           </div>
@@ -137,7 +144,7 @@ const AddItem = ({ marketplace, nft }) => {
                     onChange={handleChange}
                     checked={template === 'template'}
                     id="rb-template-2"
-                    label="Choose a template"
+                    label="Use a template"
                   />
                 </Form.Group>
               </div>
@@ -196,7 +203,7 @@ const AddItem = ({ marketplace, nft }) => {
                 </Button>
               </div>
             </Row>
-            <Row className="g-4">
+            {/* <Row className="g-4">
               <div>
                 <h1>Hello World!</h1>
                 <button
@@ -208,9 +215,9 @@ const AddItem = ({ marketplace, nft }) => {
                   Take Screenshot
                 </button>
                 {ticketImage && <img src={ticketImage} />}
-                {<img src={ticketImage} />}
+                <img src={ticketImage} />} 
               </div>
-            </Row>
+            </Row> */}
           </div>
         </main>
       </div>
