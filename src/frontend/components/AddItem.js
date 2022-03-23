@@ -15,7 +15,8 @@ const AddItem = ({ marketplace, nft }) => {
   const [price, setPrice] = useState(null)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [address, setAddress] = useState('')
+  const [address1, setAddress1] = useState('')
+  const [address2, setAddress2] = useState('')
   const imageRef = useRef(null)
   const { ticketImage, takeScreenshot } = useScreenshot()
   const [template, setTemplate] = useState('upload')
@@ -95,7 +96,7 @@ const AddItem = ({ marketplace, nft }) => {
               <Card.Img variant="bottom" src={ticket1} />
               <Card.ImgOverlay
                 style={{
-                  paddingTop: 60,
+                  paddingTop: 20,
                   paddingLeft: 585,
                   // fontFamily: 'Arial, Helvetica, sans-serif',
                   fontFamily: 'Georgia',
@@ -103,11 +104,12 @@ const AddItem = ({ marketplace, nft }) => {
                   fontWeight: 'bold',
                 }}
               >
-                <Card.Text style={{textAlign: 'left'}}>Event Information</Card.Text>
+                {/* <Card.Text style={{textAlign: 'left'}}>Event Information</Card.Text> */}
                 <Card.Text style={{textAlign: 'left'}}>{name ? name : ""}</Card.Text>
                 <Card.Text style={{textAlign: 'left'}}>Date: {moment(eventDate).format('MMMM Do YYYY')}</Card.Text>
                 <Card.Text style={{textAlign: 'left'}}>Time: {moment(eventDate).format('h:mm a')}</Card.Text>
-                <Card.Text style={{textAlign: 'left'}}>{address ? address : ""}</Card.Text>
+                <Card.Text style={{textAlign: 'left'}}>{address1 ? address1 : ""}</Card.Text>
+                <Card.Text style={{textAlign: 'left'}}>{address2 ? address2 : ""}</Card.Text>
                 <Card.Text style={{textAlign: 'left'}}>{price ? price : 0} ETH</Card.Text>
               </Card.ImgOverlay>
             </Card>
@@ -176,11 +178,18 @@ const AddItem = ({ marketplace, nft }) => {
                 </Space>
               </div>
               <Form.Control
-                onChange={(e) => setAddress(e.target.value)}
+                onChange={(e) => setAddress1(e.target.value)}
                 size="lg"
                 required
                 type="text"
-                placeholder="Address"
+                placeholder="Street"
+              />
+              <Form.Control
+                onChange={(e) => setAddress2(e.target.value)}
+                size="lg"
+                required
+                type="text"
+                placeholder="City/State"
               />
               <Form.Control
                 onChange={(e) => setPrice(e.target.value)}
@@ -199,7 +208,7 @@ const AddItem = ({ marketplace, nft }) => {
                   size="lg"
                   className="custom-btn"
                 >
-                  Add an NFT and list for sale
+                  Add an item (NFT) and list for sale
                 </Button>
               </div>
             </Row>
