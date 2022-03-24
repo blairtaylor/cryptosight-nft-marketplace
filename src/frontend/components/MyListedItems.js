@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { ethers } from "ethers"
 import { Row, Col, Card } from 'react-bootstrap'
+import { Input } from 'antd'
+const { Search } = Input
 
 function renderSoldItems(items) {
   return (
@@ -71,8 +73,21 @@ export default function MyListedItems({ marketplace, nft, account }) {
   return (
     <div className="flex justify-center">
       {listedItems.length > 0 ?
-        <div className="px-5 py-3 container">
-            <h2 className='h2-text'>Your Items Listed for Sale</h2>
+        <div className="px-5 container">
+          <Row>
+            <Col>
+              <h2 className='h2-text'>Your Items Listed for Sale</h2>
+            </Col>
+            <Col>
+              <div className="float-end">
+                <Search
+                  style={{ width: 400 }}
+                  placeholder="enter item name"
+                  enterButton="Search"
+                />
+              </div>
+            </Col>
+          </Row>
           <Row xs={1} md={2} lg={4} className="g-4 py-3">
             {listedItems.map((item, idx) => (
               <Col key={idx} className="overflow-hidden">
