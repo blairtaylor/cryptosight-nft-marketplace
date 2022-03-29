@@ -96,7 +96,9 @@ contract Marketplace is ReentrancyGuard {
             msg.sender
         );
     }
+
     function getTotalPrice(uint _itemId) view public returns(uint){
+        // get total price    
         return((items[_itemId].price*(100 + feePercent))/100);
     }
 }
